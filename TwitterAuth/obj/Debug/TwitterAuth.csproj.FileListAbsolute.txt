@@ -1,0 +1,7 @@
+E:\Projects\PrivateFlock.net\TwitterAuth\bin\Debug\TwitterAuth.dll
+E:\Projects\PrivateFlock.net\TwitterAuth\bin\Debug\TwitterAuth.pdb
+E:\Projects\PrivateFlock.net\TwitterAuth\bin\Debug\DotNetOpenAuth.dll
+E:\Projects\PrivateFlock.net\TwitterAuth\bin\Debug\DotNetOpenAuth.xml
+E:\Projects\PrivateFlock.net\TwitterAuth\obj\Debug\ResolveAssemblyReference.cache
+E:\Projects\PrivateFlock.net\TwitterAuth\obj\Debug\TwitterAuth.dll
+E:\Projects\PrivateFlock.net\TwitterAuth\obj\Debug\TwitterAuth.pdb
