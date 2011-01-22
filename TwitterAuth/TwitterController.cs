@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.OAuth;
-using DotNetOpenAuth.OAuth.Messages;
+using Twitterizer;
+using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.Security;
 
 namespace TwitterAuth {
 
@@ -17,7 +16,6 @@ namespace TwitterAuth {
 
         public abstract string ConsumerSecret { get; }
 
-        private readonly InMemoryTokenManager _tokenManager;
 
         public TwitterController() {
             if (string.IsNullOrEmpty(ConsumerKey)) {
@@ -27,11 +25,6 @@ namespace TwitterAuth {
             if (string.IsNullOrEmpty(ConsumerSecret)) {
                 throw new ArgumentException("ConsumerSecret is null or empty");
             }
-
-            //Contract.Requires(string.IsNullOrEmpty(ConsumerKey)==false, "ConsumerKey Must Not Be Null");}
-            //Contract.Requires<ArgumentNullException>(ConsumerKey != null);
-
-            _tokenManager = TokenManagerManager.Create(ConsumerKey, ConsumerSecret);
         }
 
         public void Index() {
@@ -39,9 +32,9 @@ namespace TwitterAuth {
         }
 
         public void Logon() {
-            var client = new TwitterClient(_tokenManager);
-            client.StartAuthorization();
-            //return null;
+            HttpRequest request = System.Web.HttpContext.Current.Request;
+            var callBackUrl = new Uri(request.Url.Scheme + "://" + request.Url.Authority + "/Users/Callback");
+            var requestToken = OAuthUtility.GetRequestToken(ConsumerKey, ConsumerSecret, callBackUrl.ToString());
         }
 
         public ActionResult Logoff() {
@@ -51,14 +44,26 @@ namespace TwitterAuth {
         }
 
         public ActionResult Callback() {
-            var client = new TwitterClient(_tokenManager);
-            var response = client.FinishAuthorization();
+            OAuthTokenResponse response = null;
+            if(Request.QueryString["oauth_token"] == null)
+            {
+                //user is not auth. not sure if this will happen.
+            } 
+            else
+            {
+                //user is auth. now need to check if we have access?
+                string oauthToken = Request.QueryString["oauth_token"].ToString();
+                response = OAuthUtility.GetAccessToken(ConsumerKey, ConsumerSecret, oauthToken, "");
+            }
+
+
+           
             if (response != null) {
                 var twitterResponse = new TwitterResponse
                                           {
                                               AccessSecret = response.TokenSecret,
                                               AccessToken = response.Token,
-                                              Logon = ((AuthorizedTokenResponse)response).ExtraData["screen_name"],
+                                              Logon = response.ScreenName, //use consistent verbiage between username/logon/screen name.
                                           };
 
                 TempData["twitterResponse"] = twitterResponse;

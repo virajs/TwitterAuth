@@ -5,3 +5,10 @@ E:\Projects\PrivateFlock.net\TwitterAuth\bin\Debug\DotNetOpenAuth.xml
 E:\Projects\PrivateFlock.net\TwitterAuth\obj\Debug\ResolveAssemblyReference.cache
 E:\Projects\PrivateFlock.net\TwitterAuth\obj\Debug\TwitterAuth.dll
 E:\Projects\PrivateFlock.net\TwitterAuth\obj\Debug\TwitterAuth.pdb
+E:\Projects\TwitterAuth\TwitterAuth\bin\Debug\TwitterAuth.dll
+E:\Projects\TwitterAuth\TwitterAuth\bin\Debug\TwitterAuth.pdb
+E:\Projects\TwitterAuth\TwitterAuth\obj\Debug\ResolveAssemblyReference.cache
+E:\Projects\TwitterAuth\TwitterAuth\obj\Debug\TwitterAuth.dll
+E:\Projects\TwitterAuth\TwitterAuth\obj\Debug\TwitterAuth.pdb
+E:\Projects\TwitterAuth\TwitterAuth\bin\Debug\Twitterizer2.dll
+E:\Projects\TwitterAuth\TwitterAuth\bin\Debug\Newtonsoft.Json.dll
