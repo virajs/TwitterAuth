@@ -14,21 +14,23 @@ namespace sample.Controllers
 
         public override string ConsumerKey
         {
-            get { return "ConsumerKey Goes Here"; }
+            get { return "bcTjf9zofNIpfPMgSayKw"; }
         }
 
         public override string ConsumerSecret
         {
-            get { return "ConsumerSecret Goes Here"; }
+            get { return "mDFOdhXMHAQkGGTWm6TKrJL0AukKqGVy084sb44"; }
         }
+
 
         public ActionResult Index()
         {
+            var twitterResponse = (ITwitterResponse)TempData["twitterResponse"];
             return View();
         }
 
 
-        public ActionResult Success()
+        public override ActionResult Success()
         {
             var twitterResponse = (ITwitterResponse)TempData["twitterResponse"];
             return Redirect("~/");
@@ -38,7 +40,7 @@ namespace sample.Controllers
         /// This action will be called in the event of an auth failure.
         /// </summary>
         /// <returns></returns>
-        public ActionResult Fail()
+        public override ActionResult Fail()
         {
             return View();
         }
