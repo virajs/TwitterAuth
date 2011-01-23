@@ -16,6 +16,9 @@ namespace TwitterAuth {
 
         public abstract string ConsumerSecret { get; }
 
+        public abstract ActionResult Success();
+
+        public abstract ActionResult Fail();
 
         public TwitterController() {
             if (string.IsNullOrEmpty(ConsumerKey)) {
@@ -27,14 +30,12 @@ namespace TwitterAuth {
             }
         }
 
-        public void Index() {
-            Response.Write("tester;");
-        }
-
         public void Logon() {
             HttpRequest request = System.Web.HttpContext.Current.Request;
             var callBackUrl = new Uri(request.Url.Scheme + "://" + request.Url.Authority + "/Users/Callback");
-            var requestToken = OAuthUtility.GetRequestToken(ConsumerKey, ConsumerSecret, callBackUrl.ToString());
+            OAuthTokenResponse oAuthTokenResponse = OAuthUtility.GetRequestToken(ConsumerKey, ConsumerSecret, callBackUrl.ToString());
+            var uri = OAuthUtility.BuildAuthorizationUri(oAuthTokenResponse.Token, true);
+            Response.Redirect(uri.ToString());
         }
 
         public ActionResult Logoff() {
