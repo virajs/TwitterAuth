@@ -67,14 +67,30 @@ namespace TwitterAuth {
                                               Logon = response.ScreenName, //use consistent verbiage between username/logon/screen name.
                                           };
 
+                CreateAuthCookie(response.ScreenName, response.Token);
+
                 TempData["twitterResponse"] = twitterResponse;
                 return RedirectToAction("Success");
-            } else {
-                return RedirectToAction("Fail", response);
             }
+            return RedirectToAction("Fail", response);
+        }
 
-            // show error
-            //return View("LogOn");
+        private static void CreateAuthCookie(string username, string token)
+        {
+            //Get ASP.NET to create a forms authentication cookie (based on settings in web.config)~
+            HttpCookie cookie = FormsAuthentication.GetAuthCookie(username, false);
+
+            //Decrypt the cookie
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+
+            //Create a new ticket using the details from the generated cookie, but store the username & token passed in from the authentication method
+            FormsAuthenticationTicket newticket = new FormsAuthenticationTicket(ticket.Version, ticket.Name, ticket.IssueDate, ticket.Expiration,ticket.IsPersistent, token);
+
+            // Encrypt the ticket & store in the cookie
+            cookie.Value = FormsAuthentication.Encrypt(newticket);
+
+            // Update the outgoing cookies collection.
+            System.Web.HttpContext.Current.Response.Cookies.Set(cookie);
         }
     }
 }
