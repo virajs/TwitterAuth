@@ -33,6 +33,7 @@ namespace sample.Controllers
         public override ActionResult Success()
         {
             var twitterResponse = (ITwitterResponse)TempData["twitterResponse"];
+            //Here is where you save the response to your database....or whatever
             return Redirect("~/");
         }
 

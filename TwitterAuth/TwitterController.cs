@@ -42,6 +42,7 @@ namespace TwitterAuth {
 
         public ActionResult Callback() {
             OAuthTokenResponse response = null;
+
             if(Request.QueryString["oauth_token"] == null)
             {
                 //user is not auth. not sure if this will happen.
@@ -50,7 +51,8 @@ namespace TwitterAuth {
             {
                 //user is auth. now need to check if we have access?
                 string oauthToken = Request.QueryString["oauth_token"].ToString();
-                response = OAuthUtility.GetAccessToken(ConsumerKey, ConsumerSecret, oauthToken, "");
+                //response = OAuthUtility.GetAccessToken(ConsumerKey, ConsumerSecret, oauthToken, "");
+                response = OAuthUtility.GetAccessTokenDuringCallback(ConsumerKey, ConsumerSecret);
             }
 
 
